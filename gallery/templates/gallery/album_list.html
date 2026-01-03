@@ -1,0 +1,26 @@
+{% extends "gallery/base.html" %}
+{% block title %}Albums{% endblock %}
+{% block content %}
+  <h1>Photo Upload Batches</h1>
+
+  <div class="stack">
+    {% for album in albums %}
+      <div class="card">
+        <div class="pad">
+          <h2 style="margin:0 0 4px 0;">
+            <a href="{% url 'album_detail' album.id %}">
+              {{ album.title }}
+            </a>
+          </h2>
+
+          <div class="muted">
+            {{ album.photos.count }} photo{{ album.photos.count|pluralize }}
+            · Added {{ album.created_at|date:"F j, Y" }}
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No albums yet.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

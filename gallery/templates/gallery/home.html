@@ -1,0 +1,93 @@
+{% extends "gallery/base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <h1 style="margin-bottom:6px;">Welcome</h1>
+  <div class="muted" style="margin-bottom:16px;">
+    This is our private family photo archive. Please be respectful and help us add context with tags and comments.
+  </div>
+
+  <div class="card">
+    <div class="pad">
+      <div style="font-weight:700; margin-bottom:8px;">What this site is</div>
+      <ul style="margin:0; padding-left:18px;">
+        <li>A place to browse and preserve family photos</li>
+        <li>A way to tag photos (people, events, places, decades) so they’re easier to find</li>
+        <li>Comments are tied to each photo and are moderated</li>
+        <li>Start by clicking <strong>☰</strong> at the top</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="height:14px;"></div>
+
+  <div class="card">
+    <div class="pad">
+      <div style="font-weight:700; margin-bottom:8px;">Privacy & rules</div>
+      <ul style="margin:0; padding-left:18px;">
+        <li>Do not share photos outside the family without permission</li>
+        <li>Keep comments kind and helpful</li>
+        <li>Admins can remove comments if needed</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="height:14px;"></div>
+
+  <div class="card">
+    <div class="pad">
+      <div style="font-weight:700; margin-bottom:8px;">Site stats</div>
+      <div class="muted">
+        {{ stats.albums }} albums · {{ stats.photos }} photos · {{ stats.tags }} tags · {{ stats.comments }} comments
+      </div>
+
+      <div style="height:10px;"></div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn" href="/albums/">View albums</a>
+        <a class="btn" href="/photos/">Browse photos</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:14px;"></div>
+
+  <div class="card">
+    <div class="pad">
+      <div style="font-weight:700; margin-bottom:8px;">Coming soon</div>
+      <ul style="margin:0; padding-left:18px;">
+        <li><b>Private note to admins</b> (for corrections, sensitive details, or requests)</li>
+        <li><b>Upload area</b> so relatives can contribute their own photos</li>
+        <li><b>Requests</b> like “please tag these photos” or “who is this?”</li>
+      </ul>
+      <div class="muted" style="margin-top:8px;">
+        For now, message the admins outside the site if you have a correction or concern.
+      </div>
+    </div>
+  </div>
+
+  {% if latest_photos %}
+    <div style="height:14px;"></div>
+
+    <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+      <div>
+        <h2 style="margin:0 0 4px 0;">Recently added</h2>
+        <div class="muted">A few of the newest photos</div>
+      </div>
+      <a class="btn" href="/photos/">See all</a>
+    </div>
+
+    <div style="height:10px;"></div>
+
+    <div class="grid">
+      {% for p in latest_photos %}
+        <a class="card" href="{% url 'photo_detail' p.id %}">
+          <img class="thumb" src="{{ p.image_thumb }}" alt="Photo">
+          <div class="pad">
+            {% if p.year %}<div class="muted">{{ p.year }}</div>{% endif %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}

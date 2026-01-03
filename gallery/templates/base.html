@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Family Photos{% endblock %}</title>
+  </head>
+  <body>
+    <nav style="display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid #ddd;">
+      <div>
+        {% if user.is_authenticated %}
+          <span style="margin-right:10px;">Hi, {{ user.username }}</span>
+          <form method="post" action="/accounts/logout/" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+          </form>
+        {% endif %}
+      </div>
+    </nav>
+
+    <main style="max-width:900px;margin:0 auto;padding:16px;">
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>

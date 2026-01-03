@@ -1,0 +1,68 @@
+{# gallery/templates/gallery/photo_browser.html #}
+{% extends "gallery/base.html" %}
+{% block title %}Browse Photos{% endblock %}
+
+{% block content %}
+  <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:12px;">
+    <div>
+      <h1 style="margin-bottom:4px;">Filtered View</h1>
+      <div class="muted">Filter by tags. Photos must match all selected tags.</div>
+    </div>
+
+    <div style="display:flex; gap:10px; align-items:center;">
+      <button id="openFilters" class="btn" type="button">
+        Filters{% if selected %} ({{ selected|length }}){% endif %}
+      </button>
+      <a class="btn" href="/photos/">Clear</a>
+    </div>
+  </div>
+
+  <div style="height:14px;"></div>
+
+  <div class="two-col">
+    <!-- Desktop sidebar (visible on desktop via CSS) -->
+    <aside class="card desktop-only">
+      <div class="pad">
+        {% include "gallery/_filters_form.html" %}
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <section>
+      <div class="muted" style="margin-bottom:10px;">
+        Showing {{ photos|length }} photo{{ photos|length|pluralize }}
+      </div>
+
+      <div class="grid">
+        {% for p in photos %}
+          <a class="card" href="{% url 'photo_detail' p.id %}">
+            <img class="thumb" src="{{ p.image_thumb }}" alt="Photo">
+            <div class="pad">
+              {% if p.year %}<div class="muted">{{ p.year }}</div>{% endif %}
+            </div>
+          </a>
+        {% empty %}
+          <p class="muted">No photos match those filters.</p>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+
+  <!-- Mobile Drawer -->
+  <div id="drawerBackdrop" class="drawer-backdrop"></div>
+
+  <div id="filterDrawer" class="drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <div style="font-weight:700;">Filters</div>
+      <button id="closeFilters" class="btn" type="button">Close</button>
+    </div>
+
+    <div class="drawer-body">
+      <div class="card">
+        <div class="pad">
+          {% include "gallery/_filters_form.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
