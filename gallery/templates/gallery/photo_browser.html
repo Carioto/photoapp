@@ -20,32 +20,25 @@
   <div style="height:14px;"></div>
 
   <div class="two-col">
-    <!-- Desktop sidebar (visible on desktop via CSS) -->
-    <aside class="card desktop-only">
-      <div class="pad">
-        {% include "gallery/_filters_form.html" %}
-      </div>
-    </aside>
-
-    <!-- Main content -->
+     <!-- Main content -->
     <section>
-      <div class="muted" style="margin-bottom:10px;">
-        Showing {{ photos|length }} photo{{ photos|length|pluralize }}
-      </div>
+    <div class="muted" style="margin-bottom:10px;">
+      Showing {{ photos|length }} photo{{ photos|length|pluralize }}
+    </div>
 
-      <div class="grid">
-        {% for p in photos %}
-          <a class="card" href="{% url 'photo_detail' p.id %}">
-            <img class="thumb" src="{{ p.image_thumb }}" alt="Photo">
-            <div class="pad">
-              {% if p.year %}<div class="muted">{{ p.year }}</div>{% endif %}
-            </div>
-          </a>
-        {% empty %}
-          <p class="muted">No photos match those filters.</p>
-        {% endfor %}
-      </div>
-    </section>
+    <div class="grid">
+      {% for p in photos %}
+        <a class="card" href="{% url 'photo_detail' p.id %}">
+          <img class="thumb" src="{{ p.image_thumb }}" alt="Photo">
+          <div class="pad">
+            {% if p.year %}<div class="muted">{{ p.year }}</div>{% endif %}
+          </div>
+        </a>
+      {% empty %}
+        <p class="muted">No photos match those filters.</p>
+      {% endfor %}
+    </div>
+  </section>
   </div>
 
   <!-- Mobile Drawer -->

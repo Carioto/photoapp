@@ -10,8 +10,7 @@
     --accent: #3b82f6; --accent-soft: #e0ecff;}
   :root[data-theme="dark"] {--bg: #0f1115; --card: #171a21; --border: #2a2f3a; --text: #e7e9ee;
     --muted: #a7adba; --accent: #d8b37c; --accent-soft: #2a2f3a;}
-  body {background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
-    margin: 0;}
+  body {background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;}
   a { color: inherit; text-decoration: none; }
   a:hover { text-decoration: underline; }
   .muted { color: var(--muted); font-size: 14px; }
@@ -20,7 +19,7 @@
     border-bottom: 1px solid var(--border); gap: 10px;}
   .topbar-left, .topbar-right { display: flex; align-items: center; gap: 10px; }
   .brand { font-weight: 700; }
-  .page {max-width: 1100px; margin: 0 auto; padding: 16px;}
+  .page {max-width: 1100px; margin: 0 auto; padding: 16px 8px;}
   .drawer-backdrop {position: fixed; inset: 0; background: rgba(0,0,0,.35); display: none; z-index: 50;}
   .drawer-backdrop.open { display: block; }
   .drawer {position: fixed; top: 0; left: 0; height: 100vh; width: min(92vw, 380px); background: var(--card);
@@ -42,22 +41,10 @@
 textarea {width: 100%; min-height: 140px; padding: 12px; border-radius: 12px; border: 1px solid var(--border);
   background: var(--card); color: var(--text); font-family: inherit; font-size: 15px; line-height: 1.4;
   resize: vertical;}
-.photo-stage {
-  width: 100%;
-  max-height: 70vh;
-  overflow: auto;                /* scroll inside the photo box */
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  background: var(--card);
-  -webkit-overflow-scrolling: touch;
-}
+.photo-stage {width: 100%; max-height: 70vh; overflow: auto; border-radius: 14px; border: 1px solid var(--border);
+  background: var(--card); -webkit-overflow-scrolling: touch;}
+.stage-img {display: block; max-width: none; width: 100%; height: auto;}
 
-.stage-img {
-  display: block;
-  max-width: none;               /* allows panning when zoomed */
-  width: 100%;                   /* initial fit */
-  height: auto;
-}
 
 </style>
 
@@ -66,7 +53,7 @@ textarea {width: 100%; min-height: 140px; padding: 12px; border-radius: 12px; bo
   <body>
     <header class="topbar">
       <div class="topbar-left">
-        <button id="mobileMenuBtn" class="btn mobile-only" type="button">☰</button>
+        <button id="mobileMenuBtn" class="btn" type="button" aria-label="Menu">☰</button>
         <a class="brand" href="/">Home</a>
       </div>
 
@@ -160,5 +147,36 @@ textarea {width: 100%; min-height: 140px; padding: 12px; border-radius: 12px; bo
         document.addEventListener("keydown", (e) => { if (e.key === "Escape") shut(); });
       })();
     </script>
+    <script>
+  (function () {
+    const openBtn = document.getElementById("openFilters");
+    const drawer = document.getElementById("filterDrawer");
+    const back = document.getElementById("drawerBackdrop");
+    const closeBtn = document.getElementById("closeFilters");
+
+    // Only run on pages that actually have the filters drawer
+    if (!openBtn || !drawer || !back || !closeBtn) return;
+
+    function open() {
+      drawer.classList.add("open");
+      back.classList.add("open");
+      drawer.setAttribute("aria-hidden", "false");
+      document.body.classList.add("drawer-lock");
+    }
+
+    function shut() {
+      drawer.classList.remove("open");
+      back.classList.remove("open");
+      drawer.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("drawer-lock");
+    }
+
+    openBtn.addEventListener("click", open);
+    closeBtn.addEventListener("click", shut);
+    back.addEventListener("click", shut);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") shut(); });
+  })();
+</script>
+
   </body>
 </html>

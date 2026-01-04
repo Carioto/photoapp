@@ -2,6 +2,7 @@ from itertools import count
 from pathlib import Path
 from django.core.management.base import BaseCommand, CommandError
 from gallery.models import Album, Photo
+from urllib.parse import quote
 
 
 class Command(BaseCommand):
@@ -45,8 +46,9 @@ class Command(BaseCommand):
                 continue
 
             if base_url:
-                image_web = f"{base_url}/web/{wf.name}"
-                image_thumb = f"{base_url}/thumbs/{tf.name}"
+                encoded = quote(wf.name)
+                image_web = f"{base_url}/web/{encoded}"
+                image_thumb = f"{base_url}/thumbs/{encoded}"
             else:
                 image_web = f"/media/web/{wf.name}"
                 image_thumb = f"/media/thumbs/{tf.name}"    
