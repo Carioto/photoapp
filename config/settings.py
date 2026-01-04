@@ -117,6 +117,13 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-MEDIA_URL = "/media/"
 MEDIA_ROOT = r"Z:\FamilyPhotos\Derived"
 LANGUAGE_CODE = env("LANGUAGE_CODE", default="en-us")
+
+USE_R2_MEDIA = env.bool("USE_R2_MEDIA", default=False)
+
+if USE_R2_MEDIA:
+    # Production: we do NOT serve local media paths
+    MEDIA_URL = "https://pub-fdbd187eb3a7403284ee1f08f2d4f82f.r2.dev/"
+else:
+    MEDIA_URL = "/media/"
