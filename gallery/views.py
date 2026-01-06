@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Album, Photo, Tag, Comment
 from django.db.models import Count, Q
+from django.core.paginator import Paginator
 
 def album_list(request):
     albums = Album.objects.order_by("-created_at")
@@ -30,11 +31,19 @@ from django.shortcuts import render
 from .models import Photo, Tag
 
 
+from django.core.paginator import Paginator
+from django.db.models import Count, Q
+
 def photo_browser(request):
     selected = request.GET.getlist("tags")
     untagged = request.GET.get("untagged") == "1"
 
-    photos = Photo.objects.select_related("album").prefetch_related("tags").order_by("-created_at")
+    photos = (
+        Photo.objects
+        .select_related("album")
+        .prefetch_related("tags")
+        .order_by("-created_at")
+    )
 
     if untagged:
         photos = photos.filter(tags__isnull=True)
@@ -42,17 +51,37 @@ def photo_browser(request):
     if selected:
         photos = (
             photos.filter(tags__slug__in=selected)
-            .annotate(matched=Count("tags", filter=Q(tags__slug__in=selected), distinct=True))
+            .annotate(
+                matched=Count(
+                    "tags",
+                    filter=Q(tags__slug__in=selected),
+                    distinct=True,
+                )
+            )
             .filter(matched=len(selected))
         )
+
+    photos = photos.distinct()
+
+    # Pagination
+    paginator = Paginator(photos, 40)  # show 48 photos per page
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
 
     all_tags = Tag.objects.order_by("name")
 
     return render(
         request,
         "gallery/photo_browser.html",
-        {"photos": photos.distinct(), "all_tags": all_tags, "selected": set(selected), "untagged": untagged},
+        {
+            "photos": page_obj.object_list,
+            "page_obj": page_obj,
+            "all_tags": all_tags,
+            "selected": set(selected),
+            "untagged": untagged,
+        },
     )
+
 
 def home(request):
     stats = {

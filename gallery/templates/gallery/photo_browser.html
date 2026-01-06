@@ -23,8 +23,10 @@
      <!-- Main content -->
     <section>
     <div class="muted" style="margin-bottom:10px;">
-      Showing {{ photos|length }} photo{{ photos|length|pluralize }}
-    </div>
+  Showing {{ page_obj.start_index }}–{{ page_obj.end_index }}
+  of {{ page_obj.paginator.count }} photos
+</div>
+
 
     <div class="grid">
       {% for p in photos %}
@@ -58,4 +60,23 @@
       </div>
     </div>
   </div>
+  {% if page_obj.has_other_pages %}
+  <div class="pagination">
+    {% with request.GET.urlencode as qs %}
+      {% if page_obj.has_previous %}
+        <a class="btn" href="?{{ qs|cut:'page=' }}&page={{ page_obj.previous_page_number }}">Prev</a>
+      {% endif %}
+
+      <span class="pagination-info muted">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+      </span>
+
+      {% if page_obj.has_next %}
+        <a class="btn" href="?{{ qs|cut:'page=' }}&page={{ page_obj.next_page_number }}">Next</a>
+      {% endif %}
+    {% endwith %}
+  </div>
+{% endif %}
+
+
 {% endblock %}

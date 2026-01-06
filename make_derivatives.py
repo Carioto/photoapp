@@ -51,7 +51,7 @@ def save_jpeg_resized(src_path: Path, dst_path: Path, max_width: int) -> None:
 
 def main() -> None:
     # CHANGE THESE PATHS to match your machine/NAS mapping
-    input_dir = Path(r"Z:\FamilyPhotos\Originals\batch_001")  # <-- your NAS mapped drive path
+    input_dir = Path(r"Z:\FamilyPhotos\Originals\batch_002")  # <-- your NAS mapped drive path
     out_web_dir = Path(r"Z:\FamilyPhotos\Derived\web")
     out_thumb_dir = Path(r"Z:\FamilyPhotos\Derived\thumbs")
 
