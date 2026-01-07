@@ -30,7 +30,7 @@
 
     <div class="grid">
       {% for p in photos %}
-        <a class="card" href="{% url 'photo_detail' p.id %}">
+        <a class="card" href="{% url 'photo_detail' p.id %}?next={{ request.get_full_path|urlencode }}">
           <div class="thumb-wrap">
             <img class="thumb" src="{{ p.image_thumb }}" alt="Photo">
             {% if p.is_favorited %}

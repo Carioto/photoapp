@@ -19,6 +19,7 @@ def album_detail(request, album_id):
 def photo_detail(request, photo_id):
     photo = get_object_or_404(Photo, id=photo_id)
     is_favorited = Favorite.objects.filter(user=request.user, photo=photo).exists()
+    next_url = request.GET.get("next") or request.META.get("HTTP_REFERER") or ""
     if request.method == "POST":
         text = (request.POST.get("text") or "").strip()
         if text:
@@ -26,7 +27,7 @@ def photo_detail(request, photo_id):
         return redirect("photo_detail", photo_id=photo.id)
 
     comments = photo.comments.filter(is_visible=True).order_by("-created_at")
-    return render(request, "gallery/photo_detail.html", {"photo": photo, "comments": comments, "is_favorited": is_favorited,})
+    return render(request, "gallery/photo_detail.html", {"photo": photo, "comments": comments, "is_favorited": is_favorited,"next_url": next_url,})
 
 @login_required
 def toggle_favorite(request, photo_id):
@@ -40,6 +41,9 @@ def toggle_favorite(request, photo_id):
         fav.delete()
     else:
         Favorite.objects.create(user=request.user, photo=photo)
+    next_url = request.POST.get("next") or request.GET.get("next")
+    if next_url:
+        return redirect(next_url)
 
     return redirect("photo_detail", photo_id=photo_id)
 
@@ -126,4 +130,7 @@ def favorites(request):
         .order_by("-favorited_by__created_at")
         .distinct()
     )
+    next_url = request.POST.get("next") or request.GET.get("next")
+    if next_url:
+        return redirect(next_url)
     return render(request, "gallery/favorites.html", {"photos": photos})
