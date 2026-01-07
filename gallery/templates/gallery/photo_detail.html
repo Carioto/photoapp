@@ -12,6 +12,13 @@
 </div>
 
 </div>
+<form method="post" action="{% url 'toggle_favorite' photo.id %}">
+  {% csrf_token %}
+  <button class="btn" type="submit">
+    {% if is_favorited %}★ Unfavorite{% else %}☆ Favorite{% endif %}
+  </button>
+</form>
+
 <div class="photo-detail">
   <div class="card">
     <div class="pad">
@@ -26,7 +33,7 @@
       {% if photo.tags.all %}
       <span style="margin-top: 10px">
         {% for tag in photo.tags.all %}
-        <span class="tag">{{ tag.name }}</span>
+        <span class="tag">{{ tag.name }}, </span>
         {% endfor %}
       </span>
       {% endif %}

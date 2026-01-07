@@ -7,4 +7,7 @@ urlpatterns = [
     path("photos/", views.photo_browser, name="photo_browser"),
     path("album/<uuid:album_id>/", views.album_detail, name="album_detail"),
     path("photo/<uuid:photo_id>/", views.photo_detail, name="photo_detail"),
+    path("photo/<uuid:photo_id>/favorite/", views.toggle_favorite, name="toggle_favorite"),
+    path("favorites/", views.favorites, name="favorites"),
+
 ]

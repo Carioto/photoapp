@@ -33,6 +33,32 @@ class Photo(models.Model):
         return self.title or str(self.id)
 
 
+class Favorite(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="favorites",
+    )
+    photo = models.ForeignKey(
+        "Photo",
+        on_delete=models.CASCADE,
+        related_name="favorited_by",
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["user", "photo"], name="unique_user_photo_favorite")
+        ]
+        indexes = [
+            models.Index(fields=["user", "created_at"]),
+            models.Index(fields=["photo"]),
+        ]
+
+    def __str__(self):
+        return f"{self.user} ❤️ {self.photo_id}"
+
+
 class Comment(models.Model):
     photo = models.ForeignKey(Photo, on_delete=models.CASCADE, related_name="comments")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

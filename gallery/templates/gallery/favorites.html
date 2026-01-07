@@ -1,0 +1,20 @@
+{% extends "gallery/base.html" %} {% block title %}Favorites{% endblock %} 
+{% block content %}
+  <h2>My Favorites</h2>
+  <div class="muted" style="margin-bottom:10px;">
+    Showing {{ photos|length }} photo{{ photos|length|pluralize }}
+  </div>
+
+  <div class="grid">
+    {% for p in photos %}
+      <a class="card" href="{% url 'photo_detail' p.id %}">
+        <img class="thumb" src="{{ p.image_thumb }}" alt="Photo">
+        <div class="pad">
+          {% if p.year %}<div class="muted">{{ p.year }}</div>{% endif %}
+        </div>
+      </a>
+    {% empty %}
+      <p class="muted">No favorites yet.</p>
+    {% endfor %}
+  </div>
+{% endblock %}
