@@ -1,0 +1,36 @@
+{% extends "gallery/base.html" %} {% block title %}Recent Comments{% endblock %} 
+{% block content %}
+  <h2>Recent Comments</h2>
+  <div class="muted" style="margin-bottom:12px;">
+    Newest comments first
+  </div>
+
+  <div style="display:flex; flex-direction:column; gap:10px;">
+    {% for c in comments %}
+      <div class="card">
+        <div class="pad">
+          <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start;">
+            <div>
+              <div style="font-weight:700;">{{ c.user.username }} 
+                <span class="muted">said on {{ c.created_at|date:"M j, Y g:i A" }} about photo: {{ c.photo.title|default:c.photo.id }}</span></div>
+            </div>
+
+            <a class="btn" href="{% url 'photo_detail' c.photo.id %}">
+              View photo →
+            </a>
+          </div>
+
+          <div style="margin-top:10px;">
+            {{ c.text|linebreaksbr }}
+          </div>
+
+          <div class="muted" style="margin-top:10px;">
+            
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="muted">No comments yet.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

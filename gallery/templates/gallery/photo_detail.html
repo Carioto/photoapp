@@ -37,7 +37,7 @@
       {% if photo.tags.all %}
       <span style="margin-top: 10px">
         {% for tag in photo.tags.all %}
-        <span class="tag">{{ tag.name }}, </span>
+        <span class="tag">{{ tag.name }}{% if not forloop.last %} • {% endif %} </span>
         {% endfor %}
       </span>
       {% endif %}

@@ -134,3 +134,12 @@ def favorites(request):
     if next_url:
         return redirect(next_url)
     return render(request, "gallery/favorites.html", {"photos": photos})
+
+
+def recent_comments(request):
+    comments = (
+        Comment.objects
+        .select_related("photo", "user")
+        .order_by("-created_at")[:100]
+    )
+    return render(request, "gallery/recent_comments.html", {"comments": comments})
