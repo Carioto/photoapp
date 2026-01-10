@@ -4,6 +4,9 @@ from django.db.models import Count, Q
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Exists, OuterRef
+from django.contrib.auth.decorators import permission_required
+from .forms import PhotoTagsForm, CreateTagForm
+
 
 def album_list(request):
     albums = Album.objects.order_by("-created_at")
@@ -143,3 +146,31 @@ def recent_comments(request):
         .order_by("-created_at")[:100]
     )
     return render(request, "gallery/recent_comments.html", {"comments": comments})
+
+
+@permission_required("gallery.can_modify_tags", raise_exception=True)
+def edit_photo_tags(request, photo_id):
+    photo = get_object_or_404(Photo, id=photo_id)
+
+    if request.method == "POST":
+        if "create_tag" in request.POST:
+            create_form = CreateTagForm(request.POST)
+            form = PhotoTagsForm(instance=photo)  # keep tags form populated
+            if create_form.is_valid():
+                create_form.save()
+                return redirect("edit_photo_tags", photo_id=photo.id)
+        else:
+            form = PhotoTagsForm(request.POST, instance=photo)
+            create_form = CreateTagForm()
+            if form.is_valid():
+                form.save()
+                return redirect("photo_detail", photo_id=photo.id)
+    else:
+        form = PhotoTagsForm(instance=photo)
+        create_form = CreateTagForm()
+
+    return render(request, "gallery/edit_photo_tags.html", {
+        "photo": photo,
+        "form": form,
+        "create_form": create_form,
+    })

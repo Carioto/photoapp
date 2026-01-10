@@ -24,22 +24,34 @@
 </form>
 
 <div class="photo-detail">
-  <div class="card">
-    <div class="pad">
+<div class="card" style="margin-top: 5px; margin-bottom: 5px;">
+  <div class="pad">
+
+    <div style="display: flex; align-items: center;justify-content: space-between;
+      gap: 10px; max-width: fit-content;">
       <!-- Filename / reference name -->
-      <div style="font-weight: 700; font-size: 18px">
-        {{ photo.title }} {% if photo.year %}
-        <span class="muted"> · {{ photo.year }}</span>
-        {% endif %}
+      <div style="font-weight: 400; font-size: 14px;">
+        {{ photo.title }}
       </div>
 
+      {% if perms.gallery.can_modify_tags %}
+        <a class="btn edit_but" href="{% url 'edit_photo_tags' photo.id %}">
+          Edit tags
+        </a>
+      {% endif %}
+    </div>
+
+  </div>
+
+
+    <div style="margin-bottom: 15px; margin-left: 3px;"> 
       <!-- Tags -->
       {% if photo.tags.all %}
-      <span style="margin-top: 10px">
+      <span>
         {% for tag in photo.tags.all %}
         <span class="tag">{{ tag.name }}{% if not forloop.last %} • {% endif %} </span>
-        {% endfor %}
       </span>
+      {% endfor %}
       {% endif %}
     </div>
   </div>

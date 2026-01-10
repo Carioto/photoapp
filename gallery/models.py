@@ -21,9 +21,11 @@ class Photo(models.Model):
     year = models.IntegerField(null=True, blank=True)
     tags = models.ManyToManyField("Tag", blank=True, related_name="photos")
 
-
-    # For now: store file paths or URLs as strings.
-    # Later, when you upload to Cloudflare R2, these can become https://... URLs.
+    class Meta:
+        permissions = [
+            ("can_modify_tags", "Can add/remove tags on photos"),
+        ]
+    
     image_web = models.CharField(max_length=500)
     image_thumb = models.CharField(max_length=500)
 

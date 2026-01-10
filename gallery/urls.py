@@ -10,5 +10,6 @@ urlpatterns = [
     path("photo/<uuid:photo_id>/favorite/", views.toggle_favorite, name="toggle_favorite"),
     path("favorites/", views.favorites, name="favorites"),
     path("comments/", views.recent_comments, name="recent_comments"),
+    path("photo/<uuid:photo_id>/tags/", views.edit_photo_tags, name="edit_photo_tags"),
 
 ]
