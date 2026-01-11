@@ -83,6 +83,26 @@
     {% endwith %}
   </div>
 {% endif %}
+<script>
+(function () {
+  const KEY = "photoapp:browserScroll";
+
+  // Restore scroll if we have it
+  const saved = sessionStorage.getItem(KEY);
+  if (saved) {
+    const y = parseInt(saved, 10);
+    if (!Number.isNaN(y)) window.scrollTo(0, y);
+    sessionStorage.removeItem(KEY);
+  }
+
+  // Before navigating to a photo, save current scroll
+  document.querySelectorAll('a.card[href^="/photo/"]').forEach(a => {
+    a.addEventListener("click", () => {
+      sessionStorage.setItem(KEY, String(window.scrollY));
+    }, { passive: true });
+  });
+})();
+</script>
 
 
 {% endblock %}

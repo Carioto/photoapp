@@ -26,7 +26,7 @@
   .drawer {position: fixed; top: 0; left: 0; height: 100vh; width: min(92vw, 380px); background: var(--card);
     border-right: 1px solid var(--border); transform: translateX(-100%); transition: transform .18s ease;
     z-index: 60; display: flex; flex-direction: column; overflow: hidden;}
-  .drawer.open { transform: translateX(0); }
+  .drawer.open { transform: translateX(0); flex-direction: column;}
   .drawer-header {padding: 12px 14px; border-bottom: 1px solid var(--border); display: flex;
     justify-content: space-between; align-items: center;}
   .drawer-body{flex: 1; min-height: 0; padding: 12px 14px; display: block; overflow-y: auto;
@@ -66,6 +66,7 @@ textarea {width: 100%; min-height: 140px; padding: 12px; border-radius: 12px; bo
 /* Responsive */
 @media (max-width: 900px) {.tag-grid > div {grid-template-columns: repeat(2, 1fr);}}
 @media (max-width: 500px) {.tag-grid > div {grid-template-columns: 1fr;}}
+.nav{display: flex; flex-direction: column; gap: 10px;}
 </style>
 
   </head>
@@ -87,7 +88,6 @@ textarea {width: 100%; min-height: 140px; padding: 12px; border-radius: 12px; bo
       </div>
     </header>
 
-    <!-- Mobile menu drawer -->
     <div id="mobileMenuBackdrop" class="drawer-backdrop"></div>
 
     <nav id="mobileMenu" class="drawer">

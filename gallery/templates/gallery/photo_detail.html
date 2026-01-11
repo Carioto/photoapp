@@ -3,7 +3,8 @@
 {% if next_url %}
   <a class="btn" href="{{ next_url }}">← Back to results</a>
 {% else %}
-  <a class="btn" href="{% url 'albums' %}">← Albums</a>
+  <a class="btn" href="{% url 'photo_browser' %}">← Browse</a>
+
 {% endif %}
 
 
@@ -34,11 +35,13 @@
         {{ photo.title }}
       </div>
 
-      {% if perms.gallery.can_modify_tags %}
-        <a class="btn edit_but" href="{% url 'edit_photo_tags' photo.id %}">
+    {% if perms.gallery.can_modify_tags %}
+        <a class="btn edit_but"
+            href="{% url 'edit_photo_tags' photo.id %}?next={{ next_url|urlencode }}">
           Edit tags
         </a>
-      {% endif %}
+{% endif %}
+
     </div>
 
   </div>

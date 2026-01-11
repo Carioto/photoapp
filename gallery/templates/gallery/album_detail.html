@@ -13,7 +13,7 @@
 
   <div class="grid">
     {% for p in photos %}
-      <a class="card" href="{% url 'photo_detail' p.id %}">
+<a class="card" href="{% url 'photo_detail' p.id %}?next={{ request.get_full_path|urlencode }}">
         <img class="thumb" src="{{ p.image_thumb }}" alt="{{ p.title|default:'Photo' }}">
         <div class="pad">
               {% if p.year %}
@@ -23,4 +23,26 @@
       </a>
     {% endfor %}
   </div>
+  <script>
+(function () {
+  // Unique per page URL (so Browse and Batch don't fight)
+  const KEY = "photoapp:scroll:" + location.pathname + location.search;
+
+  // Restore scroll on load
+  const saved = sessionStorage.getItem(KEY);
+  if (saved) {
+    const y = parseInt(saved, 10);
+    if (!Number.isNaN(y)) window.scrollTo(0, y);
+    sessionStorage.removeItem(KEY);
+  }
+
+  // Save scroll when clicking into a photo
+  document.querySelectorAll('a.card[href*="/photo/"]').forEach(a => {
+    a.addEventListener("click", () => {
+      sessionStorage.setItem(KEY, String(window.scrollY));
+    }, { passive: true });
+  });
+})();
+</script>
+
 {% endblock %}

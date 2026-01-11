@@ -2,7 +2,7 @@
 {% block content %}
   <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
     <h2 style="margin:0;">Edit Tags</h2>
-    <a class="btn" href="{% url 'photo_detail' photo.id %}">Back</a>
+    <a class="btn" href="{% url 'photo_detail' photo.id %}?next={{ next_url|urlencode }}">Back</a>
   </div>
 
   <div class="card" style="margin-top:12px;">
@@ -14,6 +14,7 @@
   </div>
 
   <form method="post" class="card" style="margin-top:12px;">
+    <input type="hidden" name="next" value="{{ next_url }}">
   {% csrf_token %}
   <div class="pad">
     <div class="muted" style="margin-bottom:8px;">Create a new tag:</div>
@@ -25,6 +26,7 @@
 </form>
 
   <form method="post" class="card" style="margin-top:12px;">
+    <input type="hidden" name="next" value="{{ next_url }}">
     {% csrf_token %}
     <div class="pad">
       <div class="muted" style="margin-bottom:8px;">Select tags:</div>
@@ -37,7 +39,7 @@
 
       <div style="display:flex; gap:10px; margin-top: 4px; margin-bottom: 5px; margin-left: 3px;">
         <button class="btn" type="submit">Save tags</button>
-        <a class="btn" href="{% url 'photo_detail' photo.id %}">Cancel</a>
+        <a class="btn" href="{% url 'photo_detail' photo.id %}?next={{ next_url|urlencode }}">Cancel</a>
       </div>
     </div>
   </form>

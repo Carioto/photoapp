@@ -1,3 +1,4 @@
+from urllib import request
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Album, Photo, Tag, Comment, Favorite
 from django.db.models import Count, Q
@@ -22,7 +23,7 @@ def album_detail(request, album_id):
 def photo_detail(request, photo_id):
     photo = get_object_or_404(Photo, id=photo_id)
     is_favorited = Favorite.objects.filter(user=request.user, photo=photo).exists()
-    next_url = request.GET.get("next") or request.META.get("HTTP_REFERER") or ""
+    next_url = request.GET.get("next", "")
     if request.method == "POST":
         text = (request.POST.get("text") or "").strip()
         if text:
@@ -151,6 +152,7 @@ def recent_comments(request):
 @permission_required("gallery.can_modify_tags", raise_exception=True)
 def edit_photo_tags(request, photo_id):
     photo = get_object_or_404(Photo, id=photo_id)
+    next_url = request.GET.get("next") or request.POST.get("next") or ""
 
     if request.method == "POST":
         if "create_tag" in request.POST:
@@ -173,4 +175,5 @@ def edit_photo_tags(request, photo_id):
         "photo": photo,
         "form": form,
         "create_form": create_form,
+        "next_url": next_url,
     })
