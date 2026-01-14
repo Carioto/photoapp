@@ -7,6 +7,9 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Exists, OuterRef
 from django.contrib.auth.decorators import permission_required
 from .forms import PhotoTagsForm, CreateTagForm
+import logging
+logger = logging.getLogger(__name__)
+
 
 
 def album_list(request):
@@ -154,26 +157,32 @@ def edit_photo_tags(request, photo_id):
     photo = get_object_or_404(Photo, id=photo_id)
     next_url = request.GET.get("next") or request.POST.get("next") or ""
 
-    if request.method == "POST":
-        if "create_tag" in request.POST:
-            create_form = CreateTagForm(request.POST)
-            form = PhotoTagsForm(instance=photo)  # keep tags form populated
-            if create_form.is_valid():
-                create_form.save()
-                return redirect("edit_photo_tags", photo_id=photo.id)
+    try:
+        if request.method == "POST":
+            if "create_tag" in request.POST:
+                create_form = CreateTagForm(request.POST)
+                form = PhotoTagsForm(instance=photo)
+                if create_form.is_valid():
+                    create_form.save()
+                    return redirect("edit_photo_tags", photo_id=photo.id)
+            else:
+                form = PhotoTagsForm(request.POST, instance=photo)
+                create_form = CreateTagForm()
+                if form.is_valid():
+                    form.save()
+                    return redirect("photo_detail", photo_id=photo.id)
         else:
-            form = PhotoTagsForm(request.POST, instance=photo)
+            form = PhotoTagsForm(instance=photo)
             create_form = CreateTagForm()
-            if form.is_valid():
-                form.save()
-                return redirect("photo_detail", photo_id=photo.id)
-    else:
-        form = PhotoTagsForm(instance=photo)
-        create_form = CreateTagForm()
 
-    return render(request, "gallery/edit_photo_tags.html", {
-        "photo": photo,
-        "form": form,
-        "create_form": create_form,
-        "next_url": next_url,
-    })
+        return render(request, "gallery/edit_photo_tags.html", {
+            "photo": photo,
+            "form": form,
+            "create_form": create_form,
+            "next_url": next_url,
+        })
+
+    except Exception:
+        logger.exception("edit_photo_tags failed (photo_id=%s, user=%s)", photo_id, getattr(request.user, "username", None))
+        raise
+
