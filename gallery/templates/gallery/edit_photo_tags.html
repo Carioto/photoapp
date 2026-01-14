@@ -13,21 +13,9 @@
     <img class="thumb" style="height:auto; max-height:50vh;" src="{{ photo.image_web }}" alt="Photo">
   </div>
 
-  <form method="post" class="card" style="margin-top:12px;">
-    <input type="hidden" name="next" value="{{ next_url }}">
-  {% csrf_token %}
-  <div class="pad">
-    <div class="muted" style="margin-bottom:8px;">Create a new tag:</div>
-    {{ create_form.name }}
-    <button class="btn" type="submit" name="create_tag" value="1" style="margin-top:10px;">
-      Create tag
-    </button>
-  </div>
-</form>
 
+<div class="card">
 {% if messages or create_form.name.errors %}
-  <div style="margin-bottom:12px;">
-    <div class="card">
       <div class="pad">
 
         {% for message in messages %}
@@ -43,11 +31,20 @@
         {% endfor %}
 
       </div>
-    </div>
-  </div>
 {% endif %}
 
-
+  <form method="post">
+    <input type="hidden" name="next" value="{{ next_url }}">
+    <div class="pad">
+  {% csrf_token %}
+    <div class="muted">Create a new tag:</div>
+    {{ create_form.name }}
+    <button class="btn" type="submit" name="create_tag" value="1" style="margin-top:10px;">
+      Create tag
+    </button>
+  </div>
+</form>
+</div>
 
   <form method="post" class="card" style="margin-top:12px;">
     <input type="hidden" name="next" value="{{ next_url }}">
