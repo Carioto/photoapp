@@ -20,7 +20,14 @@ class CreateTagForm(forms.ModelForm):
 
     def clean_name(self):
         name = (self.cleaned_data["name"] or "").strip()
+
         if not name:
-            raise forms.ValidationError("Tag name cannot be blank.")
+            raise forms.ValidationError("Please enter a tag name.")
+
+        # Case-insensitive duplicate check
+        existing = Tag.objects.filter(name__iexact=name).first()
+        if existing:
+            raise forms.ValidationError(f'"{existing.name}" already exists.')
+
         return name
 

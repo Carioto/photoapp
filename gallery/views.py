@@ -8,6 +8,9 @@ from django.db.models import Exists, OuterRef
 from django.contrib.auth.decorators import permission_required
 from .forms import PhotoTagsForm, CreateTagForm
 import logging
+from django.contrib import messages
+from django.db import IntegrityError
+
 logger = logging.getLogger(__name__)
 
 
@@ -159,30 +162,58 @@ def edit_photo_tags(request, photo_id):
 
     try:
         if request.method == "POST":
+            # ---- Create tag form submit ----
             if "create_tag" in request.POST:
                 create_form = CreateTagForm(request.POST)
                 form = PhotoTagsForm(instance=photo)
+
                 if create_form.is_valid():
-                    create_form.save()
-                    return redirect("edit_photo_tags", photo_id=photo.id)
+                    name = create_form.cleaned_data["name"].strip()
+
+                    # Case-insensitive duplicate check
+                    existing = Tag.objects.filter(name__iexact=name).first()
+                    if existing:
+                        messages.info(request, f'"{existing.name}" already exists.')
+                        return redirect(f"{request.path}?next={next_url}")
+
+                    try:
+                        Tag.objects.create(name=name)  # slug auto-fills in Tag.save()
+                        messages.success(request, f'Created tag "{name}".')
+                    except IntegrityError:
+                        messages.info(request, f'"{name}" already exists.')
+
+                    return redirect(f"{request.path}?next={next_url}")
+
+            # ---- Save tags form submit ----
             else:
                 form = PhotoTagsForm(request.POST, instance=photo)
                 create_form = CreateTagForm()
+
                 if form.is_valid():
                     form.save()
-                    return redirect("photo_detail", photo_id=photo.id)
+                    messages.success(request, "Tags updated.")
+                    return redirect(f"{request.build_absolute_uri(photo.get_absolute_url())}?next={next_url}")
+
+        # ---- GET request ----
         else:
             form = PhotoTagsForm(instance=photo)
             create_form = CreateTagForm()
 
-        return render(request, "gallery/edit_photo_tags.html", {
-            "photo": photo,
-            "form": form,
-            "create_form": create_form,
-            "next_url": next_url,
-        })
+        return render(
+            request,
+            "gallery/edit_photo_tags.html",
+            {
+                "photo": photo,
+                "form": form,
+                "create_form": create_form,
+                "next_url": next_url,
+            },
+        )
 
     except Exception:
-        logger.exception("edit_photo_tags failed (photo_id=%s, user=%s)", photo_id, getattr(request.user, "username", None))
+        logger.exception(
+            "edit_photo_tags failed (photo_id=%s, user=%s)",
+            photo_id,
+            getattr(request.user, "username", None),
+        )
         raise
-
