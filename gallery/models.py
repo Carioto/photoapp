@@ -1,6 +1,7 @@
 import uuid
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 
 
@@ -34,6 +35,9 @@ class Photo(models.Model):
 
     def __str__(self) -> str:
         return self.title or str(self.id)
+    
+    def get_absolute_url(self):
+        return reverse("photo_detail", args=[self.id])
 
 
 class Favorite(models.Model):
