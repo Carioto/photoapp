@@ -1,9 +1,9 @@
 {% extends "gallery/base.html" %} {% block title %}Photo{% endblock %} 
 {% block content %}
 {% if next_url %}
-  <a class="btn" href="{{ next_url }}">← Back to results</a>
+  <a href="{{ next_url }}">← Back to results</a>
 {% else %}
-  <a class="btn" href="{% url 'photo_browser' %}">← Browse</a>
+  <a href="{% url 'home' %}">← Home</a>
 
 {% endif %}
 

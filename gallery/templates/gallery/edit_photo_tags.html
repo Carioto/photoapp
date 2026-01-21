@@ -33,24 +33,13 @@
       </div>
 {% endif %}
 
-  <form method="post">
-    <input type="hidden" name="next" value="{{ next_url }}">
-    <div class="pad">
-  {% csrf_token %}
-    <div class="muted">Create a new tag:</div>
-    {{ create_form.name }}
-    <button class="btn" type="submit" name="create_tag" value="1" style="margin-top:10px;">
-      Create tag
-    </button>
-  </div>
-</form>
 </div>
 
   <form method="post" class="card" style="margin-top:12px;">
     <input type="hidden" name="next" value="{{ next_url }}">
     {% csrf_token %}
     <div class="pad">
-      <div class="muted" style="margin-bottom:8px;">Select tags:</div>
+      <div class="muted" style="margin-bottom:8px;">Select all appropriate tags, then Save:</div>
 
       <div class="tag-grid">
              {{ form.tags }}
@@ -64,4 +53,18 @@
       </div>
     </div>
   </form>
+  <div class="card">
+
+    <form method="post">
+      <input type="hidden" name="next" value="{{ next_url }}">
+      <div class="pad">
+        {% csrf_token %}
+        <div class="muted">Add a new tag not listed above:</div>
+        {{ create_form.name }}
+        <button class="btn" type="submit" name="create_tag" value="1" style="margin-top:10px;">
+          Create tag
+        </button>
+      </div>
+    </form>
+  </div>
 {% endblock %}
