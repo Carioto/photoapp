@@ -11,7 +11,7 @@ JPEG_QUALITY = 85
 
 SUPPORTED_INPUT_EXTS = {".png", ".jpg", ".jpeg", ".tif", ".tiff", ".webp"}
 
-BATCH_NAME = "batch_010"  # Change this for each new batch
+BATCH_NAME = "batch_011"  # Change this for each new batch
 
 
 def save_jpeg_resized(src_path: Path, dst_path: Path, max_width: int) -> None:

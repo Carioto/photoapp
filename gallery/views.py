@@ -130,6 +130,10 @@ def home(request):
         "latest_photos": latest_photos,
     })
 
+def uploading_photos(request):
+    return render(request, "gallery/uploading_photos.html", {
+        })
+
 
 @login_required
 def favorites(request):

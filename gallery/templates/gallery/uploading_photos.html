@@ -1,0 +1,73 @@
+{% extends "gallery/base.html" %} {% block title %}Contribute{% endblock %} 
+{% block content %}
+
+  <div class="card">
+    <div class="pad">
+      <h2 style="margin:0;">Contribute Photos</h2>
+      <p class="muted" style="margin:8px 0 0 0;">
+        Want to add photos to the family archive? Use the upload link below. We review everything before it appears on the site.
+      </p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:12px;">
+    <div class="pad">
+      <h3 style="margin:0 0 8px 0;">Upload link</h3>
+
+      <p class="muted" style="margin:0 0 10px 0;">
+        Use this shared folder to upload your photos. (If you don’t have access, message an admin.)
+      </p>
+
+      <!-- Replace href with your Drive/Dropbox/OneDrive link -->
+      <a class="btn" href="https://drive.google.com/drive/folders/1jycJGqEJxvry4RpLpPx7LWp8_oSbJHTn?usp=sharing" target="_blank" rel="noopener">
+        Open upload folder →
+      </a>
+
+      <div class="muted" style="margin-top:10px;">
+        Tip: You can upload from your phone directly using the Drive/Dropbox app.
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:12px;">
+    <div class="pad">
+      <h3 style="margin:0 0 8px 0;">What to upload</h3>
+      <ul style="margin:0; padding-left:18px; line-height:1.6;">
+        <li>Family photos, events, holidays, school pics, vacations, etc.</li>
+        <li>Scans are great — 300dpi is perfect for most prints.</li>
+        <li>JPEG is fine; TIFF is welcome for high-quality scans.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:12px;">
+    <div class="pad">
+      <h3 style="margin:0 0 8px 0;">Helpful info to include</h3>
+      <p class="muted" style="margin:0 0 10px 0;">
+        If you can, put this in the filename or add a short note in a text file:
+      </p>
+  </div>
+
+  <div class="card" style="margin-top:12px;">
+    <div class="pad">
+      <h3 style="margin:0 0 8px 0;">What happens next</h3>
+      <ol style="margin:0; padding-left:18px; line-height:1.6;">
+        <li>We review uploads for duplicates and quality.</li>
+        <li>We organize, create web + thumbnail versions, and tag them.</li>
+        <li>Then they appear in the archive for browsing.</li>
+      </ol>
+
+      <div class="muted" style="margin-top:10px;">
+        Nothing is published automatically — uploads are reviewed first.
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:12px;">
+    <div class="pad" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+      <a class="btn" href="{% url 'home' %}">Back home</a>
+      <a class="btn" href="{% url 'photo_browser' %}">Browse photos</a>
+    </div>
+  </div>
+
+{% endblock %}

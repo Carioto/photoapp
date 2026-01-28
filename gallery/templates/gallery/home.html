@@ -1,5 +1,5 @@
 {% extends "gallery/base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}Family Photos{% endblock %}
 
 {% block content %}
   <h1 style="margin-bottom:6px;">Welcome</h1>
@@ -14,6 +14,7 @@
         <li>A place to browse and preserve family photos</li>
         <li>A way to tag photos (people, events, places, decades) so they’re easier to find</li>
         <li>Comments are tied to each photo and are moderated</li>
+        <li>Dark Mode is available at the upper right.</li>
         <li>Start by clicking <strong>☰</strong> at the top</li>
       </ul>
     </div>
@@ -48,6 +49,7 @@
         <a class="btn glow-on-hover" href="/photos/">Browse by Tags</a>
         <a class="btn glow-on-hover" href="{% url 'favorites' %}">Your Favorites</a>
         <a class="btn glow-on-hover" href="{% url 'recent_comments' %}">Recent Comments</a>
+        <a class="btn glow-on-hover" href="{% url 'uploading_photos' %}">Uploading Directions</a>
       </div>
     </div>
   </div>
