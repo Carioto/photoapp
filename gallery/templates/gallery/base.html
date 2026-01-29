@@ -44,27 +44,27 @@
  .photo-stage {width: 100%; max-height: 70vh; overflow: auto; border-radius: 14px; border: 1px solid var(--border);
   background: var(--card); -webkit-overflow-scrolling: touch;}
  .stage-img {display: block; max-width: none; width: 100%; height: auto;}
- .pagination{display: flex; align-items: center; justify-content: center; gap: 12px; margin: 20px 0; flex-wrap: wrap;}
- .pagination .btn{min-width: 80px; text-align: center;}
- .pagination-info{white-space: nowrap;}
- .thumb-wrap{position: relative;}
- .fav-badge{position: absolute; top: 5px; right: 5px; transform: translate(-50%, -50%); width: 10px; height: 10px;
+ .pagination {display: flex; align-items: center; justify-content: center; gap: 12px; margin: 20px 0; flex-wrap: wrap;}
+ .pagination .btn {min-width: 80px; text-align: center;}
+ .pagination-info {white-space: nowrap;}
+ .thumb-wrap {position: relative;}
+ .fav-badge {position: absolute; top: 5px; right: 5px; transform: translate(-50%, -50%); width: 10px; height: 10px;
   border-radius: 999px; display: grid; place-items: center; font-weight: 900; font-size: 18px; color: #d8b37c; 
   border: 1px solid rgba(0,0,0,.12); box-shadow: 0 2px 10px rgba(0,0,0,.25); pointer-events: none;}
  .edit_but {width: 80px; padding: 4px; text-align: center; font-size: 12px;}
  @media (max-width: 900px) {.tag-grid {grid-template-columns: repeat(2, 1fr);}}
  @media (max-width: 500px) {.tag-grid {grid-template-columns: 1fr;}}
- #menuDrawer a.btn{display: block; margin-bottom: 5px;}
- #menuDrawer a.btn:last-child{margin-bottom: 0;}
- .tag-grid > div{column-count: 4; column-gap: 14px;}
- .tag-grid > div > div{break-inside: avoid; margin: 0 0 6px 0;}
- .tag-grid label{display: flex; align-items: center; gap: 6px; font-size: 14px; cursor: pointer; margin: 0;}
- .tag-grid input[type="checkbox"]{ margin: 0; }
+ #menuDrawer a.btn {display: block; margin-bottom: 5px;}
+ #menuDrawer a.btn:last-child {margin-bottom: 0;}
+ .tag-grid > div {column-count: 4; column-gap: 14px;}
+ .tag-grid > div > div {break-inside: avoid; margin: 0 0 6px 0;}
+ .tag-grid label {display: flex; align-items: center; gap: 6px; font-size: 14px; cursor: pointer; margin: 0;}
+ .tag-grid input[type="checkbox"] { margin: 0; }
  @media (max-width: 900px){.tag-grid > div{ column-count: 2; }}
- .nav{display: flex; flex-direction: column; gap: 10px;}
- .msg{padding: 6px 10px; border-radius: 8px; margin-top: 6px; font-size: 14px;}
- .msg-success{background: rgba(34,197,94,.15); color: #16a34a; border: 1px solid rgba(34,197,94,.3);}
- .msg-error{background: rgba(239,68,68,.15); color: #dc2626; border: 1px solid rgba(239,68,68,.3);}
+ .nav {display: flex; flex-direction: column; gap: 10px;}
+ .msg {padding: 6px 10px; border-radius: 8px; margin-top: 6px; font-size: 14px;}
+ .msg-success {background: rgba(34,197,94,.15); color: #16a34a; border: 1px solid rgba(34,197,94,.3);}
+ .msg-error {background: rgba(239,68,68,.15); color: #dc2626; border: 1px solid rgba(239,68,68,.3);}
  .glow-on-hover {border: none; outline: none; cursor: pointer; position: relative;
   z-index: 0; border-radius: 10px;}
  .glow-on-hover:before {background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000); content: '';  position: absolute; top: -2px; left:-2px; background-size: 400%; z-index: -1; filter: blur(5px); width: calc(100% + 4px); height: calc(100% + 4px); animation: glowing 20s linear infinite;opacity: 0;
@@ -72,11 +72,10 @@
  .glow-on-hover:active {color: #000}
  .glow-on-hover:active:after {background: transparent;}
  .glow-on-hover:hover:before {opacity: 1;}
- .glow-on-hover:after {z-index: -1; content: ''; position: absolute; width: 100%; height: 100%; background:var(--accent-soft) ;
-    left: 0; top: 0; border-radius: 10px;}
+ .glow-on-hover:after {z-index: -1; content: ''; position: absolute; width: 100%; height: 100%; background:var(--accent-soft) ; left: 0; top: 0; border-radius: 10px;}
  @keyframes glowing {0% { background-position: 0 0; }50% { background-position: 400% 0; } 100% { background-position: 0 0; }}
- .icondiv{text-align: center;margin-top: 10vh;}
- #myicon{height: 50px;}
+ .icondiv {text-align: center;margin-top: 10vh;}
+ #myicon {height: 50px;}
 </style>
 
   </head>
@@ -127,7 +126,6 @@
       </main>
     </div>
 
-    <!-- Dark mode toggle -->
     <script>
       (function () {
         const root = document.documentElement;
@@ -155,7 +153,6 @@
       })();
     </script>
 
-    <!-- Mobile menu open/close -->
     <script>
       (function () {
         const btn = document.getElementById("mobileMenuBtn");
@@ -190,7 +187,6 @@
     const back = document.getElementById("drawerBackdrop");
     const closeBtn = document.getElementById("closeFilters");
 
-    // Only run on pages that actually have the filters drawer
     if (!openBtn || !drawer || !back || !closeBtn) return;
 
     function open() {

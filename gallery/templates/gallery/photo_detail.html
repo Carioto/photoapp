@@ -51,7 +51,6 @@
 
     <div style="display: flex; align-items: center;justify-content: space-between;
       gap: 10px; max-width: fit-content;">
-      <!-- Filename / reference name -->
       <div style="font-weight: 400; font-size: 14px;">
         {{ photo.title }}
       </div>
@@ -69,7 +68,6 @@
 
 
     <div style="margin-bottom: 15px; margin-left: 12px;"> 
-      <!-- Tags -->
       {% if photo.tags.all %}
       <span>
         {% for tag in photo.tags.all %}

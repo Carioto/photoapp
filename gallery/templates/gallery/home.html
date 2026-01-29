@@ -87,9 +87,6 @@
       {% for p in latest_photos %}
         <a class="card" href="{% url 'photo_detail' p.id %}">
           <img class="thumb" src="{{ p.image_thumb }}" alt="Photo">
-          <div class="pad">
-            {% if p.year %}<div class="muted">{{ p.year }}</div>{% endif %}
-          </div>
         </a>
       {% endfor %}
     </div>
