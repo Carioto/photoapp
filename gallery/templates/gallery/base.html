@@ -6,8 +6,8 @@
     <title>{% block title %}Family Photos{% endblock %}</title>
 
   <style>
-  :root {--bg: url("/static/gallery/img/lightbg.png"); --card: #ffffff; --border: #e1e5ea; --text: #1f2933; --muted: #6b7280; --accent: #3b82f6; --accent-soft: #dadde2; --drawerbg: #f0eccb;}
-  :root[data-theme="dark"] {--bg: url("/static/gallery/img/darkbg.png"); --card: #171a21; --border: #2a2f3a; --text: #e7e9ee; --muted: #a7adba; --accent: #d8b37c; --accent-soft: #2a2f3a; --drawerbg: #171a21;}
+  :root {--bg: url("/static/gallery/img/lightbg.png"); --card: #ffffff; --border: #e1e5ea; --text: #1f2933; --muted: #6b7280; --accent: #3b82f6; --accent-soft: #dadde2; --drawerbg: #f0eccb; --iconimage: url("/static/gallery/img/34.png")}
+  :root[data-theme="dark"] {--bg: url("/static/gallery/img/darkbg.png"); --card: #171a21; --border: #2a2f3a; --text: #e7e9ee; --muted: #a7adba; --accent: #d8b37c; --accent-soft: #2a2f3a; --drawerbg: #171a21;--iconimage: url("/static/gallery/img/34b2.png")}
   body {background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;}
   a { color: inherit; text-decoration: none; }
   a:hover { text-decoration: underline; text-shadow: #16a34a;}
@@ -75,7 +75,7 @@
  .glow-on-hover:after {z-index: -1; content: ''; position: absolute; width: 100%; height: 100%; background:var(--accent-soft) ; left: 0; top: 0; border-radius: 10px;}
  @keyframes glowing {0% { background-position: 0 0; }50% { background-position: 400% 0; } 100% { background-position: 0 0; }}
  .icondiv {text-align: center;margin-top: 10vh;}
- #myicon {height: 50px;}
+ #myicon {height: 70px;}
 </style>
 
   </head>
@@ -113,7 +113,7 @@
         <a class="btn glow-on-hover" href="{% url 'uploading_photos' %}">Uploading Directions</a>
       </div>
       <div class="icondiv">
-        <img id="myicon" src="/static/gallery/img/myimg.png">
+        <img id="myicon" style="content: var(--iconimage);">
       </div>
     </nav>
 
